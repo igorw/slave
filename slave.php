@@ -13,10 +13,8 @@ $loader->register();
 $config = new Configuration;
 $config->user = 'igor';
 $config->password = 'password';
-$config->email = 'my@email.com';
 $config->dbUser = 'root';
 $config->dbName = 'phpbb2';
-$config->dbDriver = 'mysqli';
 $config->baseURL = 'http://localhost/~igor/phpBB2/';
 
 $client = new Client($config);
