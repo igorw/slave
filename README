@@ -1,4 +1,7 @@
-
 # Slave
 
 The slave abuses HTTP to install phpBB for you.
+
+# Credits
+
+Great thanks to Chris "cs278" Smith for initial code.
