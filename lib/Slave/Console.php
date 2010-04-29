@@ -26,14 +26,14 @@ class Console {
 		'dbprefix=s'	=> 'Database prefix',
 		
 		'help|h'	=> 'This help',
+		'version'	=> 'Version information',
 	);
 	
 	public function run() {
 		try {
-			$config = $this->parseOptions();
-			
-			$client = new Client($config);
-			$client->install();
+			$opts = $this->setUpOptions();
+			$command = $this->route($opts);
+			echo $command->execute($opts);
 		} catch (GetoptException $e) {
 			$usage = $e->getUsageMessage();
 			$usage = preg_replace('#Usage: (.*?)\\n#', "Usage: slave [ options ] baseURL" . PHP_EOL . PHP_EOL, $usage);
@@ -47,80 +47,27 @@ class Console {
 		}
 	}
 	
-	private function parseOptions() {
-		$config = new Configuration;
-		
+	private function setUpOptions() {
 		$opts = new \Zend_Console_Getopt('');
 		$opts->addRules($this->rules);
-
+		
 		try {
 			$opts->parse();
 		} catch (\Zend_Console_Getopt_Exception $e) {
 			throw new \InvalidArgumentException($e->getMessage());
 		}
 		
+		return $opts;
+	}
+	
+	private function route(\Zend_Console_Getopt $opts) {
 		if ($opts->getOption('h') || 1 == $GLOBALS['argc']) {
-			throw new GetoptException($opts);
+			return new Command\HelpCommand($opts);
+		} else if ($opts->getOption('version')) {
+			return new Command\VersionCommand($opts);
 		}
 		
-		if ($user = $opts->getOption('u')) {
-			$config->user = $user;
-		}
-		if ($password = $opts->getOption('p')) {
-			if (strlen($password) < 6) {
-				throw new \InvalidArgumentException("Supplied user password is too short, must be at least 6 characters");
-			}
-			$config->password = $password;
-		}
-		if ($email = $opts->getOption('e')) {
-			$validator = new \Zend_Validate_EmailAddress();
-			if ( ! $validator->isValid($email)) {
-				throw new \InvalidArgumentException("Supplied email address is invalid");
-			}
-			$config->email = $email;
-		}
-		
-		if ($dbUser = $opts->getOption('dbuser')) {
-			$config->dbUser = $dbUser;
-		}
-		if ($dbPassword = $opts->getOption('dbpasswd')) {
-			$config->dbPassword = $dbPassword;
-		}
-		if ($dbName = $opts->getOption('dbname')) {
-			$config->dbName = $dbName;
-		} else {
-			throw new \InvalidArgumentException("Manditory option --dbname was not supplied");
-		}
-		if ($dbHost = $opts->getOption('dbhost')) {
-			$config->dbHost = $dbHost;
-		}
-		if ($dbPort = $opts->getOption('dbport')) {
-			$config->dbPort = $dbPort;
-		}
-		
-		if ($dbDriver = $opts->getOption('d')) {
-			$config->dbDriver = $dbDriver;
-		}
-		if ($dbPrefix = $opts->getOption('dbprefix')) {
-			$config->dbPrefix = $dbPrefix;
-		}
-
-		$config->baseURL = array_shift($opts->getRemainingArgs());
-		if ( ! $config->baseURL) {
-			throw new \InvalidArgumentException("Manditory argument baseURL not supplied");
-		}
-
-		if ( ! $this->isURL($config->baseURL)) {
-			throw new \InvalidArgumentException("Supplied baseURL is invalid");
-		}
-		if ( ! $this->hasScheme($config->baseURL)) {
-			$config->baseURL = "http://{$config->baseURL}";
-		}
-		if ( ! $this->hasPath($config->baseURL) || substr($config->baseURL, -1) != "/") {
-			$config->baseURL .= "/";
-		}
-		
-		return $config;
+		return new Command\InstallCommand($opts);
 	}
 	
 	private function isURL($URL) {
