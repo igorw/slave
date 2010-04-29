@@ -2,23 +2,23 @@
 
 The Slave abuses HTTP to install phpBB for you.
 
-# Example
+## Example
 
 	./slave -u igor -e email@example.com --dbuser root --dbpass secret --dbname phpbb \
 		localhost/phpBB3
 
-# Credits
+## Credits
 
 Great thanks to Chris "cs278" Smith for initial code.
 
-# Requirements
+## Requirements
 
 PHP 5.3
 
-# Dependencies
+## Dependencies
 
 Slave uses components from Zend Framework and Symfony 2.
 
-# Assumptions
+## Assumptions
 
 config.php must be writable by the webserver.
