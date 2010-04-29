@@ -18,9 +18,15 @@ class Console {
 				'user|u=s'	=> 'Username',
 				'password|p=s'	=> 'User password',
 				'email|e=s'	=> 'User email address',
-
+				
 				'dbuser=s'	=> 'Database username',
 				'dbpass=s'	=> 'Database password',
+				'dbname=s'	=> 'Database name',
+				'dbhost=s'	=> 'Database host',
+				'dbport=i'	=> 'Database port',
+				
+				'dbdriver|d=s'	=> 'Database driver',
+				'dbprefix=s'	=> 'Database prefix',
 			));
 
 			try {
@@ -30,20 +36,46 @@ class Console {
 			}
 
 			$config = new Configuration;
+			
 			if ($user = $opts->getOption('u')) {
 				$config->user = $user;
 			}
 			if ($password = $opts->getOption('p')) {
 				if (strlen($password) < 6) {
-					throw new \InvalidArgumentException("Supplied user password is too short, must be at least 6 characters.");
+					throw new \InvalidArgumentException("Supplied user password is too short, must be at least 6 characters");
 				}
 				$config->password = $password;
 			}
 			if ($email = $opts->getOption('e')) {
+				$validator = new \Zend_Validate_EmailAddress();
+				if ( ! $validator->isValid($email)) {
+					throw new \InvalidArgumentException("Supplied email address is invalid");
+				}
 				$config->email = $email;
 			}
-			$config->dbUser = 'root';
-			$config->dbName = 'phpbb2';
+			
+			if ($dbUser = $opts->getOption('dbuser')) {
+				$config->dbUser = $dbUser;
+			}
+			if ($dbPassword = $opts->getOption('dbpass')) {
+				$config->dbPassword = $dbPassword;
+			}
+			if ($dbName = $opts->getOption('dbname')) {
+				$config->dbName = $dbName;
+			}
+			if ($dbHost = $opts->getOption('dbhost')) {
+				$config->dbHost = $dbHost;
+			}
+			if ($dbPort = $opts->getOption('dbport')) {
+				$config->dbPort = $dbPort;
+			}
+			
+			if ($dbDriver = $opts->getOption('d')) {
+				$config->dbDriver = $dbDriver;
+			}
+			if ($dbPrefix = $opts->getOption('dbprefix')) {
+				$config->dbPrefix = $dbPrefix;
+			}
 
 			$config->baseURL = array_shift($opts->getRemainingArgs());
 			if ( ! $config->baseURL) {
