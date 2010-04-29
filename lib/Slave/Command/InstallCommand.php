@@ -14,7 +14,7 @@ class InstallCommand extends AbstractCommand {
 	public function execute(\Zend_Console_Getopt $opts) {
 		$config = $this->parseOptions($opts);
 		
-		$client = new Client($config);
+		$client = new \Slave\Client($config);
 		$client->install();
 	}
 	
@@ -79,5 +79,17 @@ class InstallCommand extends AbstractCommand {
 		}
 
 		return $config;
+	}
+	
+	private function isURL($URL) {
+		return (bool) parse_url($URL);
+	}
+
+	private function hasScheme($URL) {
+		return (bool) parse_url($URL, PHP_URL_SCHEME);
+	}
+
+	private function hasPath($URL) {
+		return (bool) parse_url($URL, PHP_URL_PATH);
 	}
 }

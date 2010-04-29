@@ -69,16 +69,4 @@ class Console {
 		
 		return new Command\InstallCommand($opts);
 	}
-	
-	private function isURL($URL) {
-		return (bool) parse_url($URL);
-	}
-	
-	private function hasScheme($URL) {
-		return (bool) parse_url($URL, PHP_URL_SCHEME);
-	}
-	
-	private function hasPath($URL) {
-		return (bool) parse_url($URL, PHP_URL_PATH);
-	}
 }
