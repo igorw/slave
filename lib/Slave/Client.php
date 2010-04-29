@@ -92,7 +92,7 @@ class Client {
 		try {
 			$client = new \Zend_Http_Client($URI);
 			if ($postData) {
-				$client->setMethod(Zend_Http_Client::POST);
+				$client->setMethod(\Zend_Http_Client::POST);
 				$client->setParameterPost($postData);
 			}
 			$response = $client->request();
