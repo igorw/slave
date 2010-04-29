@@ -67,31 +67,45 @@ class Client {
 		18		ftp_pass	hidden
 		*/
 		
+		$content = $this->request('install');
+		if (preg_match('#Fatal installation error#', $content)) {
+			throw new ClientException('phpBB is already installed');
+		}
+		else if ( ! preg_match('#Welcome to Installation#', $content)) {
+			throw new ClientException('baseURL is not a phpBB');
+		}
+		
 		$this->request('config_file', $data);
 		$this->request('create_table', $data);
 		$this->request('final', $data);
 	}
 	
-	protected function request($sub, $postData) {
+	protected function request($sub, $postData = null) {
 		$fullURL = $this->config->baseURL . "install/index.php?mode=install&sub=$sub";
-		return $this->doRequest('POST', $fullURL, $postData);
+		return $this->doRequest($fullURL, $postData);
 	}
 	
-	protected function doRequest($method, $url, $postData = array()) {
-		$ch = curl_init();
+	protected function doRequest($URL, $postData = null) {
+		$ch = curl_init($URL);
 		curl_setopt_array($ch, array(
-			CURLOPT_URL		=> $url,
 			CURLOPT_RETURNTRANSFER	=> true,
 		));
-		if ('POST' == $method) {
+		if ($postData) {
 			curl_setopt_array($ch, array(
 				CURLOPT_POST		=> true,
 				CURLOPT_POSTFIELDS	=> $postData,
 			));
 		}
-		$result = curl_exec($ch);
+		$content = curl_exec($ch);
+		
+		if (curl_errno($ch)) {
+			$message = curl_error($ch);
+			curl_close($ch);
+			throw new ClientException($message);
+		}
+		
 		curl_close($ch);
 		
-		return $result;
+		return $content;
 	}
 }

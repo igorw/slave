@@ -10,7 +10,5 @@
 
 namespace Slave;
 
-require __DIR__ . '/autoload.php';
-
-$console = new Console;
-$console->run();
+class ClientException extends \Exception {
+}
