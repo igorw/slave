@@ -9,6 +9,12 @@ Example usage:
 	./slave -u igor -e email@example.com --dbuser root --dbpass secret --dbname phpbb \
 		localhost/phpBB3
 
+## Set up
+
+If you obtained this project through git, you will have to populate the submodules. You can do that with the following command:
+
+	git submodule update --init
+
 ## Credits
 
 Great thanks to Chris "cs278" Smith for initial code.
