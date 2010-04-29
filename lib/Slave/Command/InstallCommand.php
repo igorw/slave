@@ -63,6 +63,12 @@ class InstallCommand extends AbstractCommand {
 	}
 	
 	private function verifyConfig() {
+		$validDrivers = array('firebird', 'mssql', 'mssql_odbc', 'mssqlnative', 'mysql', 'mysqli', 'oracle', 'postgres', 'sqlite');
+		if (!in_array($this->config->dbDriver, $validDrivers)) {
+			throw new \InvalidArgumentException("Supplied dbal driver {$this->config->dbDriver} is invalid" . PHP_EOL . 
+				"Valid drivers: " . implode(', ', $validDrivers));
+		}
+		
 		if (strlen($this->config->password) < 6) {
 			throw new \InvalidArgumentException("Supplied user password is too short, must be at least 6 characters");
 		}

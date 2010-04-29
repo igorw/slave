@@ -83,6 +83,14 @@ class Client {
 			throw new ClientException('phpBB is already installed');
 		}
 		
+		$response = $this->request('database', array_merge($data, array('testdb' => 1)));
+		if (preg_match('#<strong style="color:red">(.*?)</strong>#s', $response->getBody(), $matches)) {
+			$dbError = $matches[1];
+			$dbError = str_replace('<br />', " ", $dbError);
+			$dbError = htmlspecialchars_decode($dbError);
+			throw new ClientException($dbError);
+		}
+		
 		$this->request('config_file', $data);
 		$this->request('create_table', $data);
 		$this->request('final', $data);
