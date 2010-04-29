@@ -2,6 +2,11 @@
 
 The Slave abuses HTTP to install phpBB for you.
 
+# Example
+
+	./slave -u igor -e email@example.com --dbuser root --dbpass secret --dbname phpbb \
+		localhost/phpBB3
+
 # Credits
 
 Great thanks to Chris "cs278" Smith for initial code.
