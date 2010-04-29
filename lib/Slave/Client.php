@@ -67,11 +67,14 @@ class Client {
 		18		ftp_pass	hidden
 		*/
 		
-		$content = $this->request('install');
-		if (preg_match('#Fatal installation error#', $content)) {
+		$response = $this->request('install');
+		if ($response->getStatus() != 200) {
+			throw new ClientException("Request resulted in status code {$response->getStatus()}");
+		}
+		if (preg_match('#Fatal installation error#', $response->getBody())) {
 			throw new ClientException('phpBB is already installed');
 		}
-		else if ( ! preg_match('#Welcome to Installation#', $content)) {
+		else if ( ! preg_match('#Welcome to Installation#', $response->getBody())) {
 			throw new ClientException('baseURL is not a phpBB');
 		}
 		
@@ -85,27 +88,18 @@ class Client {
 		return $this->doRequest($fullURL, $postData);
 	}
 	
-	protected function doRequest($URL, $postData = null) {
-		$ch = curl_init($URL);
-		curl_setopt_array($ch, array(
-			CURLOPT_RETURNTRANSFER	=> true,
-		));
-		if ($postData) {
-			curl_setopt_array($ch, array(
-				CURLOPT_POST		=> true,
-				CURLOPT_POSTFIELDS	=> $postData,
-			));
+	protected function doRequest($URI, $postData = null) {
+		try {
+			$client = new \Zend_Http_Client($URI);
+			if ($postData) {
+				$client->setMethod(Zend_Http_Client::POST);
+				$client->setParameterPost($postData);
+			}
+			$response = $client->request();
+
+			return $response;
+		} catch (\Zend_Http_Exception $e) {
+			throw new ClientException("Could not connect to $URI (Zend_Http_Exception)");
 		}
-		$content = curl_exec($ch);
-		
-		if (curl_errno($ch)) {
-			$message = curl_error($ch);
-			curl_close($ch);
-			throw new ClientException($message);
-		}
-		
-		curl_close($ch);
-		
-		return $content;
 	}
 }
