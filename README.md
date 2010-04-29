@@ -1,8 +1,10 @@
 # Slave
 
-The Slave abuses HTTP to install phpBB for you.
+The Slave abuses HTTP to install phpBB for you. He is a command-line PHP script that makes HTTP requests though phpBB 3.0's installation.
 
 ## Example
+
+Example usage:
 
 	./slave -u igor -e email@example.com --dbuser root --dbpass secret --dbname phpbb \
 		localhost/phpBB3
@@ -13,7 +15,7 @@ Great thanks to Chris "cs278" Smith for initial code.
 
 ## Requirements
 
-PHP 5.3
+* PHP 5.3
 
 ## Dependencies
 
