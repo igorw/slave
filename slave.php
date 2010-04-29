@@ -10,6 +10,10 @@
 
 namespace Slave;
 
+if ('cli' != php_sapi_name()) {
+	exit('This script must be run from the command line.');
+}
+
 require __DIR__ . '/autoload.php';
 
 $console = new Console;
