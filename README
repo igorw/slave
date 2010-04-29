@@ -18,3 +18,7 @@ PHP 5.3
 # Dependencies
 
 Slave uses components from Zend Framework and Symfony 2.
+
+# Assumptions
+
+config.php must be writable by the webserver.
