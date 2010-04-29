@@ -20,7 +20,7 @@ class Console {
 				'email|e=s'	=> 'User email address',
 				
 				'dbuser=s'	=> 'Database username',
-				'dbpass=s'	=> 'Database password',
+				'dbpasswd=s'	=> 'Database password',
 				'dbname=s'	=> 'Database name',
 				'dbhost=s'	=> 'Database host',
 				'dbport=i'	=> 'Database port',
@@ -57,7 +57,7 @@ class Console {
 			if ($dbUser = $opts->getOption('dbuser')) {
 				$config->dbUser = $dbUser;
 			}
-			if ($dbPassword = $opts->getOption('dbpass')) {
+			if ($dbPassword = $opts->getOption('dbpasswd')) {
 				$config->dbPassword = $dbPassword;
 			}
 			if ($dbName = $opts->getOption('dbname')) {
