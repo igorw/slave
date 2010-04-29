@@ -35,11 +35,9 @@ class Console {
 			$command = $this->route($opts);
 			echo $command->execute($opts);
 		} catch (\InvalidArgumentException $e) {
-			echo "Error: {$e->getMessage()}" . PHP_EOL;
-			exit(1);
+			$this->handleException($e);
 		} catch (ClientException $e) {
-			echo "Error: {$e->getMessage()}" . PHP_EOL;
-			exit(1);
+			$this->handleException($e);
 		}
 	}
 	
@@ -64,5 +62,10 @@ class Console {
 		}
 		
 		return new Command\InstallCommand($opts);
+	}
+	
+	private function handleException($e) {
+		echo "Error: {$e->getMessage()}" . PHP_EOL;
+		exit(1);
 	}
 }
