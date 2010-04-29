@@ -1,6 +1,6 @@
 # Slave
 
-The Slave abuses HTTP to install phpBB for you. He is a command-line PHP script that makes HTTP requests though phpBB 3.0's installation.
+The Slave abuses HTTP to install phpBB for you. He is a command-line PHP script who makes HTTP requests though phpBB 3.0's installation.
 
 ## Example
 
