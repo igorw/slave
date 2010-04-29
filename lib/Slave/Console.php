@@ -34,10 +34,6 @@ class Console {
 			$opts = $this->setUpOptions();
 			$command = $this->route($opts);
 			echo $command->execute($opts);
-		} catch (GetoptException $e) {
-			$usage = $e->getUsageMessage();
-			$usage = preg_replace('#Usage: (.*?)\\n#', "Usage: slave [ options ] baseURL" . PHP_EOL . PHP_EOL, $usage);
-			echo $usage;
 		} catch (\InvalidArgumentException $e) {
 			echo "Error: {$e->getMessage()}" . PHP_EOL;
 			exit(1);
