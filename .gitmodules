@@ -1,3 +1,6 @@
 [submodule "vendor/Symfony"]
 	path = vendor/Symfony
 	url = git://github.com/fabpot/symfony.git
+[submodule "vendor/Zend"]
+	path = vendor/Zend
+	url = git://github.com/tjohns/zf.git

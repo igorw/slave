@@ -1,6 +1,6 @@
 # Slave
 
-The slave abuses HTTP to install phpBB for you.
+The Slave abuses HTTP to install phpBB for you.
 
 # Credits
 
@@ -9,3 +9,7 @@ Great thanks to Chris "cs278" Smith for initial code.
 # Requirements
 
 PHP 5.3
+
+# Dependencies
+
+Slave uses components from Zend Framework and Symfony 2.
