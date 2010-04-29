@@ -35,16 +35,15 @@ class Console {
 			$client = new Client($config);
 			$client->install();
 		} catch (GetoptException $e) {
-			// invalid options
 			$usage = $e->getUsageMessage();
-			$usage = preg_replace('#Usage: (.*?)\\n#', "Usage: slave [ options ] baseURL\n\n", $usage);
+			$usage = preg_replace('#Usage: (.*?)\\n#', "Usage: slave [ options ] baseURL" . PHP_EOL . PHP_EOL, $usage);
 			echo $usage;
-			exit(1);
 		} catch (\InvalidArgumentException $e) {
-			echo "Error: {$e->getMessage()}\n";
+			echo "Error: {$e->getMessage()}" . PHP_EOL;
 			exit(1);
 		} catch (ClientException $e) {
-			echo "Error: {$e->getMessage()}\n";
+			echo "Error: {$e->getMessage()}" . PHP_EOL;
+			exit(1);
 		}
 	}
 	
