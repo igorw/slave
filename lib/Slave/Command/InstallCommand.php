@@ -65,7 +65,7 @@ class InstallCommand extends AbstractCommand {
 	private function verifyConfig() {
 		$validDrivers = array('firebird', 'mssql', 'mssql_odbc', 'mssqlnative', 'mysql', 'mysqli', 'oracle', 'postgres', 'sqlite');
 		if (!in_array($this->config->dbDriver, $validDrivers)) {
-			throw new \InvalidArgumentException("Supplied dbal driver {$this->config->dbDriver} is invalid" . PHP_EOL . 
+			throw new \InvalidArgumentException("Supplied DBAL driver {$this->config->dbDriver} is invalid" . PHP_EOL . 
 				"Valid drivers: " . implode(', ', $validDrivers));
 		}
 		

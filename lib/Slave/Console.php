@@ -22,8 +22,8 @@ class Console {
 		'dbhost=s'	=> 'Database host',
 		'dbport=i'	=> 'Database port',
 		
-		'dbdriver|d=s'	=> 'Database driver',
-		'dbprefix=s'	=> 'Database prefix',
+		'dbal|d=s'	=> 'DBAL driver',
+		'dbprefix=s'	=> 'Database table prefix',
 		
 		'help|h'	=> 'This help',
 		'version'	=> 'Version information',

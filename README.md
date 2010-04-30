@@ -11,7 +11,7 @@ Example usage:
 
 ## Defaults
 
-By default Slave will use the "mysqli" driver. The default phpBB username is "root" and the default password is "password".
+By default Slave will use the "mysqli" DBAL driver. The default phpBB username is "root" and the default password is "password".
 
 ## Set up
 
