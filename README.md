@@ -9,6 +9,10 @@ Example usage:
 	./slave -u igor -e email@example.com --dbuser root --dbpass secret --dbname phpbb \
 		localhost/phpBB3
 
+## Defaults
+
+By default Slave will use the "mysqli" driver. The default phpBB username is "root" and the default password is "password".
+
 ## Set up
 
 If you obtained this project through git, you will have to populate the submodules. You can do that with the following command:
