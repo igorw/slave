@@ -79,8 +79,16 @@ class Client {
 		}
 		
 		$response = $this->doRequest($this->config->baseURL . 'index.php', null, true);
-		if ( ! $response->isRedirect()) {
+		if (preg_match('#The config.php file could not be found.#', $response->getBody())) {
+			throw new ClientException('config.php does not exist, create it');
+		}
+		else if ( ! $response->isRedirect()) {
 			throw new ClientException('phpBB is already installed');
+		}
+		
+		$response = $this->request('requirements');
+		if (preg_match('#<dt>config.php:</dt>\s+<dd><strong style="color:green">Found</strong>, <strong style="color:red">Unwritable</strong></dd>#s', $response->getBody())) {
+			throw new ClientException('config.php is not writable');
 		}
 		
 		$response = $this->request('database', array_merge($data, array('testdb' => 1)));
