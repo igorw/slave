@@ -12,6 +12,6 @@ namespace Slave\Command;
 
 class VersionCommand extends AbstractCommand {
 	public function execute(\Zend_Console_Getopt $opts) {
-		return "Slave 0.0.0" . PHP_EOL;
+		return "Slave 0.0.1" . PHP_EOL;
 	}
 }

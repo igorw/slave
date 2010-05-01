@@ -21,6 +21,8 @@ If you obtained this project through git, you will have to populate the submodul
 
 ## Credits
 
+Slave was created by Igor "evil3" Wiedler.
+
 Great thanks to Chris "cs278" Smith for initial code.
 
 ## Requirements
