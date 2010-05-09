@@ -60,6 +60,11 @@ class InstallCommand extends AbstractCommand {
 		}
 
 		$this->config->baseURL = array_shift($this->opts->getRemainingArgs());
+		
+		// default mysql user to 'root'
+		if (!$this->config->dbUser && $this->config->dbDriver == 'mysql') {
+			$this->config->dbUser = 'root';
+		}
 	}
 	
 	private function verifyConfig() {

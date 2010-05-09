@@ -12,7 +12,7 @@ namespace Slave;
 
 class Configuration {
 	public $user = 'root', $password = 'password', $email = 'admin@example.com';
-	public $dbUser = 'root', $dbPassword, $dbName, $dbHost, $dbPort;
+	public $dbUser = '', $dbPassword, $dbName, $dbHost, $dbPort;
 	public $dbDriver = 'mysqli', $dbTablePrefix = 'phpbb_';
 	public $baseURL;
 }
